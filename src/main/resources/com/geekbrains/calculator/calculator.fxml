@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox prefHeight="332.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.geekbrains.calculator.CalculatorController">
+    <MenuBar prefHeight="29.0" prefWidth="282.0" VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" text="exit"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp"/>
+        </Menu>
+    </MenuBar>
+    <AnchorPane prefHeight="506.0" prefWidth="254.0" VBox.vgrow="ALWAYS">
+        <TextField fx:id="output" alignment="CENTER_RIGHT" editable="false" layoutX="17.0" layoutY="14.0"
+                   prefHeight="36.0" prefWidth="229.0"/>
+        <Button layoutX="16.0" layoutY="62.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="57.0" text="/"/>
+        <Button layoutX="73.0" layoutY="62.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="57.0" text="*"/>
+        <Button layoutX="130.0" layoutY="62.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="57.0" text="+"/>
+        <Button layoutX="187.0" layoutY="62.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="57.0" text="-"/>
+        <Button onAction="#inputDigit" layoutX="74.0" layoutY="233.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="0"/>
+        <Button onAction="#inputDigit" layoutX="17.0" layoutY="176.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="1"/>
+        <Button onAction="#inputDigit" layoutX="74.0" layoutY="176.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="2"/>
+        <Button onAction="#inputDigit" layoutX="131.0" layoutY="176.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="3"/>
+        <Button onAction="#inputDigit" layoutX="188.0" layoutY="176.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="4"/>
+        <Button onAction="#inputDigit" layoutX="17.0" layoutY="119.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="5"/>
+        <Button onAction="#inputDigit" layoutX="74.0" layoutY="119.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="6"/>
+        <Button onAction="#inputDigit" layoutX="131.0" layoutY="119.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="7"/>
+        <Button onAction="#inputDigit" layoutX="188.0" layoutY="119.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="8"/>
+        <Button onAction="#inputDigit" layoutX="131.0" layoutY="233.0" mnemonicParsing="false" prefHeight="57.0"
+                prefWidth="57.0" text="9"/>
+        <Button layoutX="17.0" layoutY="233.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="57.0" text="c"/>
+        <Button layoutX="188.0" layoutY="233.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="57.0" text="="/>
+    </AnchorPane>
+</VBox>
