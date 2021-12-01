@@ -1,8 +1,10 @@
 package com.geekbrains.chat.client;
 
+import java.util.List;
+
 @FunctionalInterface
 public interface Callback {
 
-    void onReceive(String message);
+    void onReceive(List<String> files);
 
 }

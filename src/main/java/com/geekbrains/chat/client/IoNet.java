@@ -1,11 +1,15 @@
 package com.geekbrains.chat.client;
 
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class IoNet implements Closeable {
 
@@ -22,22 +26,19 @@ public class IoNet implements Closeable {
         is = socket.getInputStream();
         os = socket.getOutputStream();
         buf = new byte[8192];
-        Thread readThread = new Thread(this::readMessages);
+        Thread readThread = new Thread(this::readFiles);
         readThread.setDaemon(true);
         readThread.start();
     }
 
-    public void sendMsg(String msg) throws IOException {
-        os.write(msg.getBytes(StandardCharsets.UTF_8));
-        os.flush();
-    }
-
-    private void readMessages() {
+    private void readFiles() {
         try {
             while (true) {
-                int read = is.read(buf);
-                String msg = new String(buf, 0, read).trim();
-                callback.onReceive(msg);
+                File file = new File("clientDir");
+                callback.onReceive(
+                        Arrays.stream(file.list()).map(fileName -> "clientDir/" + fileName)
+                                .collect(Collectors.toList())
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,5 +50,24 @@ public class IoNet implements Closeable {
         os.close();
         is.close();
         socket.close();
+    }
+
+    public void writeFileToClientSocketOutputStream(String filePath) {
+        File file = new File(filePath);
+        byte[] buffer = new byte[8192];
+        long start = Instant.now().toEpochMilli();
+        try (FileInputStream fis = new FileInputStream(file)) {
+            int read;
+            while ((read = fis.read(buffer)) != -1) {
+                // buf -> socket
+                os.write(buffer, 0, read);
+                os.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        long end = Instant.now().toEpochMilli();
+        System.out.println("Client time: " + (end - start) + " ms.");
     }
 }
