@@ -1,10 +1,12 @@
 package com.geekbrains.chat.server;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 
 public class Handler implements Runnable {
 
@@ -29,18 +31,23 @@ public class Handler implements Runnable {
     @Override
     public void run() {
         try {
+            long start = Instant.now().toEpochMilli();
             while (running) {
-                // вкрутить логику с получением файла от клиента
-                int read = is.read(buf);
-                String message = new String(buf, 0, read)
-                        .trim();
-                if (message.equals("quit")) {
-                    os.write("Client disconnected\n".getBytes(StandardCharsets.UTF_8));
-                    close();
-                    break;
+                if (is != null) {
+                    int read;
+                    File file = new File("serverDir/test" + start);
+                    try (FileOutputStream fos = new FileOutputStream(file)) {
+                        while ((read = is.read(buf)) != -1) {
+                            fos.write(buf, 0, read);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    long end = Instant.now().toEpochMilli();
+                    System.out.println("Server time: " + (end - start) + " ms.");
                 }
-                System.out.println("Received: " + message);
-                os.write((message + "\n").getBytes(StandardCharsets.UTF_8));
+
+
             }
         } catch (Exception e) {
             e.printStackTrace();
